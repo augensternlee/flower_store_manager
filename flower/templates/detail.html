@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{ title }}</h3>
+            </div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <form method="post">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                        </form>
+                        {% block detai %}
+
+                        {% endblock %}
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        // 等待页面加载完成
+        window.addEventListener('load', function () {
+            // 获取所有的 p 标签
+            var paragraphs = document.getElementsByTagName('p');
+
+            // 遍历所有的 p 标签
+            for (var i = 0; i < paragraphs.length; i++) {
+                var paragraph = paragraphs[i];
+
+                // 获取当前 p 标签的第二个子元素
+                var secondChild = paragraph.children[1];
+
+                // 给第二个子元素添加 readonly 属性
+                secondChild.setAttribute('disabled', 'disabled');
+            }
+        });
+    </script>
+{% endblock %}

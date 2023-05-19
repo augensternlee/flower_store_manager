@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title"><{{ title }}>{{ store.name }}</h3>
+            </div>
+            <div class="panel-body">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="form-group">
+                            <label>{{ field.label }}</label>
+                            {{ field }}
+                            <span style="color:red">
+                                {{ field.errors.0 }}
+                            </span>
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-success">提交</button>
+                    <button type="button" onclick="history.back()" class="btn btn-primary">取消</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+        $(function () {
+            {#var store = document.getElementById("id_store").parentElement;#}
+            {#store.style.display = "none";#}
+            var title = document.getElementsByClassName("panel-title")[0];
+            if (title.textContent == "新增订单" || title.textContent == "修改订单") {
+                var paidType = document.getElementById('id_paid_type');
+                var Vip = document.getElementById('id_vip');
+                Vip.disabled = true
+                paidType.addEventListener('change', function () {
+                    if (paidType.value == 7) {
+                        Vip.disabled = false;
+                    } else {
+                        Vip.value = null;
+                        Vip.disabled = true
+                    }
+                });
+            }
+        })
+    </script>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block css %}
+    <style>
+        #cover {
+            background-image: url('{% static "img/cover.jpg" %}');
+            background-size: cover; /* 或者 contain */
+        }
+        h1 {
+            margin-bottom: 30px;
+        }
+
+        p {
+            display: inline-block;
+            background-color: rgba(0, 0, 0, 0.2);
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="jumbotron" id="cover">
+            <h1>栖花漫雨</h1>
+            <p>
+                在这个四季分明的世界里，我总是能够感受到栖花漫雨带来的温柔和安宁。当我看着那些优美的雨滴滑落在花瓣上时，仿佛能够听见它们细碎的声音，这让我感到心灵的宁静和平静。</p>
+            <p>In this world of four distinct seasons, I always feel the tenderness and tranquility brought by the
+                gentle rain and falling flowers. As I watch those beautiful raindrops slide down the petals, I can
+                almost hear their gentle sound, which fills me with a sense of spiritual calm and serenity.</p>
+        </div>
+    </div>
+{% endblock %}

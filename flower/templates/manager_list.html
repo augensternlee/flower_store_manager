@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+{% load static %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div style="margin-bottom: 10px;">
+            <a href="/manager/add/" class="btn btn-success">
+                <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+                添加店长
+            </a>
+        </div>
+        <div>
+            <!-- 表格区域 -->
+            <div class="panel panel-default">
+                <!-- Default panel contents -->
+                <div class="panel-heading">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    店长列表
+                </div>
+
+                <!-- Table -->
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>所属门店</th>
+                        <th>店长账号</th>
+                        <th>店长姓名</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for obj in queryset %}
+                        <tr>
+                            <th scope="row">{{ obj.id }}</th>
+                            <td>{{ obj.store.name }}</td>
+                            <td>{{ obj.user }}</td>
+                            <td>{{ obj.name }}</td>
+                            <td>
+                                <a href="/manager/{{ obj.id }}/edit/" class="btn btn-primary btn-xs">编辑</a>
+                                <button did="{{ obj.id }}" class="btn btn-danger btn-xs deleteBtn">删除</button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <!-- 分页栏 -->
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    {{ pagination_str }}
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- 删除订单的窗口 -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="alert alert-danger alert-dismissible fade in" role="alert">
+                <h4>是否确认删除数据</h4>
+                <p>即将删除数据,删除后与之关联的数据都可能会被删除,是否继续</p>
+                <p style="text-align: right">
+                    <button id="confirmDelete" durl="/manager/delete/" type="button" class="btn btn-danger">确 认</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取 消</button>
+                </p>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/delete_js.js' %}"></script>
+    <script type="text/javascript">
+        $(function () {
+            bindBtnDeleteEvent();
+            bindDoDelete();
+        })
+    </script>
+{% endblock %}
